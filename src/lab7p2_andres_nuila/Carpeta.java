@@ -41,7 +41,7 @@ public class Carpeta {
 
     @Override
     public String toString() {
-        return "Carpeta: " + nombre + ", archivos=" + archivos;
+        return "Carpeta: " + nombre;
     }
 
 }

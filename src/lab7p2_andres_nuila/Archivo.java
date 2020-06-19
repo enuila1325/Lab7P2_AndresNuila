@@ -3,12 +3,12 @@ package lab7p2_andres_nuila;
 public class Archivo {
 
     private String nombre, link, extension;
-    private double tamaño;
+    private int tamaño;
 
     public Archivo() {
     }
 
-    public Archivo(String nombre, String link, String extension, double tamaño) {
+    public Archivo(String nombre, String link, String extension, int tamaño) {
         this.nombre = nombre;
         this.link = link;
         this.extension = extension;
@@ -43,7 +43,7 @@ public class Archivo {
         return tamaño;
     }
 
-    public void setTamaño(double tamaño) {
+    public void setTamaño(int tamaño) {
         this.tamaño = tamaño;
     }
 
