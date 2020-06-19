@@ -1,11 +1,13 @@
 package lab7p2_andres_nuila;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Carpeta {
+public class Carpeta implements Serializable {
 
     private String nombre, link;
     private ArrayList<Archivo> archivos = new ArrayList();
+    private static final long SerialVersionUID = 777L;
 
     public Carpeta() {
     }

@@ -194,15 +194,15 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(102, 102, 102)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(72, 72, 72)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         pack();
@@ -220,7 +220,7 @@ public class Main extends javax.swing.JFrame {
             String name = tf_nombre.getText();
             int peso = Integer.parseInt(js_tamaño.getValue().toString());
             String ext = cb_extension.getSelectedItem().toString();
-            String link = "";
+            String link = "dive.google.com/";
             int numAletorio;
             for (int i = 0; i < 10; i++) {
                 numAletorio = 48 + r.nextInt(122);
@@ -239,9 +239,9 @@ public class Main extends javax.swing.JFrame {
             }
             Archivo a = new Archivo(name, link, ext, peso);
             archivos.add(a);
-            AdminArchivos aa = new AdminArchivos("./Archivos.dna");
-            aa.getListaArchivos().add(a);
-            aa.escribirArchivo();
+            AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.getListaArchivos().add(a);
+            am.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Creado exitosamente");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,9 +251,9 @@ public class Main extends javax.swing.JFrame {
     private void jb_crear2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jb_crear2MouseClicked
         try {
             String nombre = tf_nombrecarp.getText();
-            String link = "";
+            String link = "dive.google.com/";
             int numAletorio;
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
                 numAletorio = 48 + r.nextInt(122);
                 if (numAletorio >= 65 && numAletorio <= 89) {
                     Character cra = (char) numAletorio;
@@ -270,9 +270,10 @@ public class Main extends javax.swing.JFrame {
             }
             Carpeta c = new Carpeta(nombre, link);
             carpetas.add(c);
-            AdminCarpetas ac = new AdminCarpetas("./Carpetas.dna");
-            ac.getListaCarpetas().add(c);
-            ac.escribirArchivo();
+            AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.getListaCarpetas().add(c);
+            am.escribirArchivo();
+            JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

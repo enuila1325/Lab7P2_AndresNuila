@@ -1,9 +1,12 @@
 package lab7p2_andres_nuila;
 
-public class Archivo {
+import java.io.Serializable;
+
+public class Archivo implements Serializable{
 
     private String nombre, link, extension;
     private int tamaño;
+    private static final long SerialVersionUID = 777L;
 
     public Archivo() {
     }
