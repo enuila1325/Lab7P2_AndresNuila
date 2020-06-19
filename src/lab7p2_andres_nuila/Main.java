@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 public class Main extends javax.swing.JFrame {
 
@@ -38,6 +39,12 @@ public class Main extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         js_tamaño = new javax.swing.JSpinner();
         jb_crear = new javax.swing.JButton();
+        pm_Miunidad = new javax.swing.JPopupMenu();
+        movDestacado = new javax.swing.JMenuItem();
+        movPapelera = new javax.swing.JMenuItem();
+        eliminar = new javax.swing.JPopupMenu();
+        restaurar = new javax.swing.JMenuItem();
+        borrar = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPrincipal = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -149,19 +156,62 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        movDestacado.setText("Mover a destacados");
+        movDestacado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                movDestacadoActionPerformed(evt);
+            }
+        });
+        pm_Miunidad.add(movDestacado);
+
+        movPapelera.setText("Mover a papelera");
+        movPapelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                movPapeleraActionPerformed(evt);
+            }
+        });
+        pm_Miunidad.add(movPapelera);
+
+        restaurar.setText("restaurar");
+        eliminar.add(restaurar);
+
+        borrar.setText("Eliminar definitivamente");
+        eliminar.add(borrar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        listaPrincipal.setModel(new DefaultListModel());
+        listaPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaPrincipalMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaPrincipal);
 
         jMenu1.setText("MENUS");
 
         jmMiunidad.setText("Mi Unidad");
+        jmMiunidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmMiunidadActionPerformed(evt);
+            }
+        });
         jMenu1.add(jmMiunidad);
 
         jm_papelera.setText("Papelera");
+        jm_papelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_papeleraActionPerformed(evt);
+            }
+        });
         jMenu1.add(jm_papelera);
 
         jm_destacados.setText("Destacados");
+        jm_destacados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jm_destacadosActionPerformed(evt);
+            }
+        });
         jMenu1.add(jm_destacados);
 
         jmAgregar.setText("Agregar");
@@ -240,6 +290,7 @@ public class Main extends javax.swing.JFrame {
             Archivo a = new Archivo(name, link, ext, peso);
             archivos.add(a);
             AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.cargarArchivo();
             am.getListaArchivos().add(a);
             am.escribirArchivo();
             JOptionPane.showMessageDialog(null, "Creado exitosamente");
@@ -271,9 +322,10 @@ public class Main extends javax.swing.JFrame {
             Carpeta c = new Carpeta(nombre, link);
             carpetas.add(c);
             AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.cargarArchivo();
             am.getListaCarpetas().add(c);
             am.escribirArchivo();
-            JOptionPane.showMessageDialog(null,"Se ha creado exitosamente");
+            JOptionPane.showMessageDialog(null, "Se ha creado exitosamente");
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -285,6 +337,129 @@ public class Main extends javax.swing.JFrame {
         AgregarCarpeta.setLocationRelativeTo(null);
         AgregarCarpeta.setVisible(true);
     }//GEN-LAST:event_AgrCarpetaActionPerformed
+
+    private void jmMiunidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmMiunidadActionPerformed
+        aux = 0;
+        listaPrincipal.setModel(new DefaultListModel<>());
+        AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+        am.cargarArchivo();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        for (Carpeta c : am.getListaCarpetas()) {
+            l.addElement(c);
+        }
+        for (Archivo a : am.getListaArchivos()) {
+            l.addElement(a);
+        }
+        listaPrincipal.setModel(l);
+    }//GEN-LAST:event_jmMiunidadActionPerformed
+
+    private void listaPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPrincipalMouseClicked
+        if (evt.isMetaDown()) {
+            if (aux == 0) {
+                pm_Miunidad.show(evt.getComponent(), evt.getX(), evt.getY());
+            } else if (aux == 1) {
+                eliminar.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+    }//GEN-LAST:event_listaPrincipalMouseClicked
+
+    private void jm_papeleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_papeleraActionPerformed
+        aux = 1;
+        listaPrincipal.setModel(new DefaultListModel<>());
+        AdminPapelera ap = new AdminPapelera("./Papelera.dna");
+        ap.cargarArchivo();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        for (Carpeta c : ap.getListaCarpetas()) {
+            l.addElement(c);
+        }
+        for (Archivo a : ap.getListaArchivos()) {
+            l.addElement(a);
+        }
+        listaPrincipal.setModel(l);
+    }//GEN-LAST:event_jm_papeleraActionPerformed
+
+    private void jm_destacadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jm_destacadosActionPerformed
+        aux = 2;
+        listaPrincipal.setModel(new DefaultListModel<>());
+        AdminDestacados ad = new AdminDestacados("./Destacados.dna");
+        ad.cargarArchivo();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        for (Carpeta c : ad.getListaCarpetas()) {
+            l.addElement(c);
+        }
+        for (Archivo a : ad.getListaArchivos()) {
+            l.addElement(a);
+        }
+        listaPrincipal.setModel(l);
+    }//GEN-LAST:event_jm_destacadosActionPerformed
+
+    private void movDestacadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_movDestacadoActionPerformed
+        try {
+            int x = listaPrincipal.getSelectedIndex();
+            DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+            Object temp = l.get(x);
+            AdminDestacados ad = new AdminDestacados("./Destacados.dna");
+            ad.cargarArchivo();
+            AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.cargarArchivo();
+            if (temp instanceof Carpeta) {
+                ad.getListaCarpetas().add((Carpeta) temp);
+                for (int i = 0; i < am.getListaCarpetas().size(); i++) {
+                    if (((Carpeta) temp).getNombre().equals(am.getListaCarpetas().get(i).getNombre())) {
+                        am.getListaCarpetas().remove(i);
+                    }
+                }
+            } else if (temp instanceof Archivo) {
+                ad.getListaArchivos().add((Archivo) temp);
+                for (int i = 0; i < am.getListaArchivos().size(); i++) {
+                    if (((Archivo) temp).getNombre().equals(am.getListaArchivos().get(i).getNombre())) {
+                        am.getListaArchivos().remove(i);
+                    }
+                }
+            }
+            am.escribirArchivo();
+            ad.escribirArchivo();
+            l.remove(x);
+            listaPrincipal.setModel(l);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_movDestacadoActionPerformed
+
+    private void movPapeleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_movPapeleraActionPerformed
+        try {
+            int x = listaPrincipal.getSelectedIndex();
+            DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+            Object temp = l.get(x);
+            AdminPapelera ap = new AdminPapelera("./Papelera.dna");
+            ap.cargarArchivo();
+            AdminMiUnidad am = new AdminMiUnidad("./MiUnidad.dna");
+            am.cargarArchivo();
+            if (temp instanceof Carpeta) {
+                ap.getListaCarpetas().add((Carpeta) temp);
+                for (int i = 0; i < am.getListaCarpetas().size(); i++) {
+                    if (((Carpeta) temp).getNombre().equals(am.getListaCarpetas().get(i).getNombre())) {
+                        am.getListaCarpetas().remove(i);
+                    }
+                }
+            } else if (temp instanceof Archivo) {
+                ap.getListaArchivos().add((Archivo) temp);
+                for (int i = 0; i < am.getListaArchivos().size(); i++) {
+                    if (((Archivo) temp).getNombre().equals(am.getListaArchivos().get(i).getNombre())) {
+                        am.getListaArchivos().remove(i);
+                    }
+                }
+            }
+            am.escribirArchivo();
+            ap.escribirArchivo();
+            l.remove(x);
+            listaPrincipal.setModel(l);
+
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_movPapeleraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -326,7 +501,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem AgrCarpeta;
     private javax.swing.JDialog AgregarArchivo;
     private javax.swing.JDialog AgregarCarpeta;
+    private javax.swing.JMenuItem borrar;
     private javax.swing.JComboBox<String> cb_extension;
+    private javax.swing.JPopupMenu eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -342,6 +519,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_papelera;
     private javax.swing.JSpinner js_tamaño;
     private javax.swing.JList<String> listaPrincipal;
+    private javax.swing.JMenuItem movDestacado;
+    private javax.swing.JMenuItem movPapelera;
+    private javax.swing.JPopupMenu pm_Miunidad;
+    private javax.swing.JMenuItem restaurar;
     private javax.swing.JTextField tf_nombre;
     private javax.swing.JTextField tf_nombrecarp;
     // End of variables declaration//GEN-END:variables
@@ -349,4 +530,5 @@ public class Main extends javax.swing.JFrame {
     private ArrayList<Carpeta> carpetas = new ArrayList();
     private ArrayList MiUnidad = new ArrayList();
     private ArrayList Destacados = new ArrayList();
+    private int aux;
 }
