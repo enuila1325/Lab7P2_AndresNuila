@@ -30,13 +30,16 @@ public class AdminBarra extends Thread {
         while (flag) {
             if (o == null) {
                 progBar.setString(pos);
+                flag= false;
             } else if (o instanceof Carpeta) {
                 progBar.setString(pos + "/" + ((Carpeta) o).getLink());
+                flag= false;
             } else if (o instanceof Archivo) {
                 progBar.setString(pos + "/" + ((Archivo) o).getLink());
+                flag= false;
             }
             try {
-                Thread.sleep(15);
+                Thread.sleep(2000);
             } catch (InterruptedException ex) {
             }
         }

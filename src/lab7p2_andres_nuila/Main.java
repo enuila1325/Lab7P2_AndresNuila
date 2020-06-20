@@ -21,9 +21,6 @@ public class Main extends javax.swing.JFrame {
         cm.addElement(".txt");
         cm.addElement(".mp4");
         cb_extension.setModel(cm);
-        AdminBarra ab = new AdminBarra(barra, pos, o);
-        Thread proceso = new Thread(ab);
-        proceso.start();
 
     }
 
