@@ -100,9 +100,9 @@ public class AdminMiUnidad {
             } //FIN IF
 
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(AdminArchivos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminMiUnidad.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(AdminArchivos.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminMiUnidad.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

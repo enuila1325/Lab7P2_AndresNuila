@@ -44,6 +44,7 @@ public class Main extends javax.swing.JFrame {
         pm_Miunidad = new javax.swing.JPopupMenu();
         movDestacado = new javax.swing.JMenuItem();
         movPapelera = new javax.swing.JMenuItem();
+        descargar = new javax.swing.JMenuItem();
         eliminar = new javax.swing.JPopupMenu();
         restaurar = new javax.swing.JMenuItem();
         borrar = new javax.swing.JMenuItem();
@@ -53,6 +54,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPrincipal = new javax.swing.JList<>();
         barra = new javax.swing.JProgressBar();
+        jb_descarga = new javax.swing.JProgressBar();
+        jLabel5 = new javax.swing.JLabel();
+        jb_porArchivo = new javax.swing.JProgressBar();
+        jLabel6 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jmMiunidad = new javax.swing.JMenuItem();
@@ -190,6 +195,14 @@ public class Main extends javax.swing.JFrame {
         });
         pm_Miunidad.add(movPapelera);
 
+        descargar.setText("Descargar");
+        descargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descargarActionPerformed(evt);
+            }
+        });
+        pm_Miunidad.add(descargar);
+
         restaurar.setText("restaurar");
         restaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -233,6 +246,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaPrincipal);
 
         barra.setStringPainted(true);
+
+        jLabel5.setText("Descarga total (para carpetas)");
+
+        jLabel6.setText("Descarga Indivudal");
 
         jMenu1.setText("MENUS");
 
@@ -291,12 +308,23 @@ public class Main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 476, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                        .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(102, 102, 102)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                            .addComponent(jb_descarga, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(270, 270, 270)
+                        .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(jb_porArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(289, 289, 289)
+                        .addComponent(jLabel6)))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +333,15 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(barra, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jb_porArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jb_descarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -704,6 +740,49 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_agregarCarpetaMouseClicked
 
+    private void descargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descargarActionPerformed
+        int x = listaPrincipal.getSelectedIndex();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        o = l.get(x);
+        if (o instanceof Archivo) {
+            int peso = ((Archivo) o).getTamaño();
+            int c = peso / 10;
+            if (c <= 1) {
+                jb_porArchivo.setMaximum(1);
+            } else if (c > 1) {
+                jb_porArchivo.setMaximum(c);
+            }
+            adminDescarga ad = new adminDescarga(jb_porArchivo, c);
+            Thread descarga = new Thread(ad);
+            descarga.start();
+        } else if (o instanceof Carpeta) {
+            int peso = 0;
+            for (int i = 0; i < ((Carpeta) o).getArchivos().size(); i++) {
+                int pesoind = ((Carpeta) o).getArchivos().get(i).getTamaño();
+                int c = pesoind / 10;
+                if (c <= 1) {
+                    jb_porArchivo.setMaximum(1);
+                } else if (c > 1) {
+                    jb_porArchivo.setMaximum(c);
+                }
+                
+                adminDescarga ad = new adminDescarga(jb_porArchivo, c);
+                Thread descarga = new Thread(ad);
+                descarga.start();
+                peso += ((Carpeta) o).getArchivos().get(i).getTamaño();
+            }
+            int c = peso / 10;
+            if (c <= 1) {
+                jb_descarga.setMaximum(1);
+            } else if (c > 1) {
+                jb_descarga.setMaximum(c);
+            }
+            adminDescarga ad = new adminDescarga(jb_descarga, c);
+            Thread descarga = new Thread(ad);
+            descarga.start();
+        }
+    }//GEN-LAST:event_descargarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -749,15 +828,20 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JProgressBar barra;
     private javax.swing.JMenuItem borrar;
     private javax.swing.JComboBox<String> cb_extension;
+    private javax.swing.JMenuItem descargar;
     private javax.swing.JPopupMenu eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jb_crear2;
+    private javax.swing.JProgressBar jb_descarga;
+    private javax.swing.JProgressBar jb_porArchivo;
     private javax.swing.JMenu jmAgregar;
     private javax.swing.JMenuItem jmMiunidad;
     private javax.swing.JMenuItem jm_destacados;

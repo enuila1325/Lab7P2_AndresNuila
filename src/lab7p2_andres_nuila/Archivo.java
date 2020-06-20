@@ -42,7 +42,7 @@ public class Archivo implements Serializable {
         this.extension = extension;
     }
 
-    public double getTamaño() {
+    public int getTamaño() {
         return tamaño;
     }
 
@@ -52,7 +52,7 @@ public class Archivo implements Serializable {
 
     @Override
     public String toString() {
-        return "Archivo: \n" + nombre + extension + " link//" + link;
+        return "Archivo: \n" + nombre + extension + " Tamaño " + tamaño + "MB";
     }
 
 }
