@@ -45,12 +45,15 @@ public class Main extends javax.swing.JFrame {
         movDestacado = new javax.swing.JMenuItem();
         movPapelera = new javax.swing.JMenuItem();
         descargar = new javax.swing.JMenuItem();
+        listarArchivosCarpeta = new javax.swing.JMenuItem();
         eliminar = new javax.swing.JPopupMenu();
         restaurar = new javax.swing.JMenuItem();
         borrar = new javax.swing.JMenuItem();
+        elcarp = new javax.swing.JMenuItem();
         popDestacados = new javax.swing.JPopupMenu();
         movMiUNidad = new javax.swing.JMenuItem();
         movpapelera = new javax.swing.JMenuItem();
+        carpDest = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPrincipal = new javax.swing.JList<>();
         barra = new javax.swing.JProgressBar();
@@ -203,6 +206,14 @@ public class Main extends javax.swing.JFrame {
         });
         pm_Miunidad.add(descargar);
 
+        listarArchivosCarpeta.setText("Listar Archivos de la carpeta");
+        listarArchivosCarpeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarArchivosCarpetaActionPerformed(evt);
+            }
+        });
+        pm_Miunidad.add(listarArchivosCarpeta);
+
         restaurar.setText("restaurar");
         restaurar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,6 +230,14 @@ public class Main extends javax.swing.JFrame {
         });
         eliminar.add(borrar);
 
+        elcarp.setText("Listar archivos en carpeta");
+        elcarp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elcarpActionPerformed(evt);
+            }
+        });
+        eliminar.add(elcarp);
+
         movMiUNidad.setText("Mover a mi unidad");
         movMiUNidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,6 +253,14 @@ public class Main extends javax.swing.JFrame {
             }
         });
         popDestacados.add(movpapelera);
+
+        carpDest.setText("Listar archivos de carpeta");
+        carpDest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carpDestActionPerformed(evt);
+            }
+        });
+        popDestacados.add(carpDest);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -765,7 +792,6 @@ public class Main extends javax.swing.JFrame {
                 } else if (c > 1) {
                     jb_porArchivo.setMaximum(c);
                 }
-                
                 adminDescarga ad = new adminDescarga(jb_porArchivo, c);
                 Thread descarga = new Thread(ad);
                 descarga.start();
@@ -782,6 +808,51 @@ public class Main extends javax.swing.JFrame {
             descarga.start();
         }
     }//GEN-LAST:event_descargarActionPerformed
+
+    private void listarArchivosCarpetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarArchivosCarpetaActionPerformed
+        int x = listaPrincipal.getSelectedIndex();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        o = l.get(x);
+        if (o instanceof Carpeta) {
+            String archiossss = "";
+            for (int i = 0; i < ((Carpeta) o).getArchivos().size(); i++) {
+                archiossss += ((Carpeta) o).getArchivos().get(i);
+            }
+            JOptionPane.showMessageDialog(null, "Los archivos en esta carpeta son: \n" + archiossss);
+        } else if (o instanceof Archivo) {
+            JOptionPane.showMessageDialog(null, "NO ALMACENA ARCHIVOS");
+        }
+    }//GEN-LAST:event_listarArchivosCarpetaActionPerformed
+
+    private void carpDestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carpDestActionPerformed
+        int x = listaPrincipal.getSelectedIndex();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        o = l.get(x);
+        if (o instanceof Carpeta) {
+            String archiossss = "";
+            for (int i = 0; i < ((Carpeta) o).getArchivos().size(); i++) {
+                archiossss += ((Carpeta) o).getArchivos().get(i);
+            }
+            JOptionPane.showMessageDialog(null, "Los archivos en esta carpeta son: \n" + archiossss);
+        } else if (o instanceof Archivo) {
+            JOptionPane.showMessageDialog(null, "NO ALMACENA ARCHIVOS");
+        }
+    }//GEN-LAST:event_carpDestActionPerformed
+
+    private void elcarpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elcarpActionPerformed
+        int x = listaPrincipal.getSelectedIndex();
+        DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
+        o = l.get(x);
+        if (o instanceof Carpeta) {
+            String archiossss = "";
+            for (int i = 0; i < ((Carpeta) o).getArchivos().size(); i++) {
+                archiossss += ((Carpeta) o).getArchivos().get(i);
+            }
+            JOptionPane.showMessageDialog(null, "Los archivos en esta carpeta son: \n" + archiossss);
+        } else if (o instanceof Archivo) {
+            JOptionPane.showMessageDialog(null, "NO ALMACENA ARCHIVOS");
+        }
+    }//GEN-LAST:event_elcarpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -827,8 +898,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton agregarCarpeta;
     private javax.swing.JProgressBar barra;
     private javax.swing.JMenuItem borrar;
+    private javax.swing.JMenuItem carpDest;
     private javax.swing.JComboBox<String> cb_extension;
     private javax.swing.JMenuItem descargar;
+    private javax.swing.JMenuItem elcarp;
     private javax.swing.JPopupMenu eliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -848,6 +921,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jm_papelera;
     private javax.swing.JSpinner js_tamaño;
     private javax.swing.JList<String> listaPrincipal;
+    private javax.swing.JMenuItem listarArchivosCarpeta;
     private javax.swing.JMenuItem movDestacado;
     private javax.swing.JMenuItem movMiUNidad;
     private javax.swing.JMenuItem movPapelera;

@@ -52,7 +52,7 @@ public class Archivo implements Serializable {
 
     @Override
     public String toString() {
-        return "Archivo: \n" + nombre + extension + " Tamaño " + tamaño + "MB";
+        return nombre + extension + " Tamaño " + tamaño + "MB";
     }
 
 }

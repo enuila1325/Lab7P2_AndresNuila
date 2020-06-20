@@ -25,7 +25,6 @@ public class adminDescarga extends Thread {
             this.d.setValue(this.d.getValue() + 1);
             if (stop >= max) {
 
-                
                 flag = false;
                 d.setValue(0);
             }
@@ -33,6 +32,10 @@ public class adminDescarga extends Thread {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
             }
+        }
+        if (!flag) {
+
+            JOptionPane.showMessageDialog(null, "Descarga Finalizada");
         }
     }
 

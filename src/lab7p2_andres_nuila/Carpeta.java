@@ -43,7 +43,7 @@ public class Carpeta implements Serializable {
 
     @Override
     public String toString() {
-        return "Carpeta: " + nombre + " link//" + link;
+        return "Carpeta: " + nombre;
     }
 
 }
