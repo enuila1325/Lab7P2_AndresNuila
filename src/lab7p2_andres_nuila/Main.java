@@ -45,6 +45,9 @@ public class Main extends javax.swing.JFrame {
         eliminar = new javax.swing.JPopupMenu();
         restaurar = new javax.swing.JMenuItem();
         borrar = new javax.swing.JMenuItem();
+        popDestacados = new javax.swing.JPopupMenu();
+        movMiUNidad = new javax.swing.JMenuItem();
+        movpapelera = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaPrincipal = new javax.swing.JList<>();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -177,6 +180,12 @@ public class Main extends javax.swing.JFrame {
 
         borrar.setText("Eliminar definitivamente");
         eliminar.add(borrar);
+
+        movMiUNidad.setText("Mover a mi unidad");
+        popDestacados.add(movMiUNidad);
+
+        movpapelera.setText("Mover a papelera");
+        popDestacados.add(movpapelera);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -355,10 +364,18 @@ public class Main extends javax.swing.JFrame {
 
     private void listaPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPrincipalMouseClicked
         if (evt.isMetaDown()) {
-            if (aux == 0) {
-                pm_Miunidad.show(evt.getComponent(), evt.getX(), evt.getY());
-            } else if (aux == 1) {
-                eliminar.show(evt.getComponent(), evt.getX(), evt.getY());
+            switch (aux) {
+                case 0:
+                    pm_Miunidad.show(evt.getComponent(), evt.getX(), evt.getY());
+                    break;
+                case 1:
+                    eliminar.show(evt.getComponent(), evt.getX(), evt.getY());
+                    break;
+                case 2:
+                    popDestacados.show(evt.getComponent(), evt.getX(), evt.getY());
+                    break;
+                default:
+                    break;
             }
         }
     }//GEN-LAST:event_listaPrincipalMouseClicked
@@ -520,8 +537,11 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JSpinner js_tamaño;
     private javax.swing.JList<String> listaPrincipal;
     private javax.swing.JMenuItem movDestacado;
+    private javax.swing.JMenuItem movMiUNidad;
     private javax.swing.JMenuItem movPapelera;
+    private javax.swing.JMenuItem movpapelera;
     private javax.swing.JPopupMenu pm_Miunidad;
+    private javax.swing.JPopupMenu popDestacados;
     private javax.swing.JMenuItem restaurar;
     private javax.swing.JTextField tf_nombre;
     private javax.swing.JTextField tf_nombrecarp;
