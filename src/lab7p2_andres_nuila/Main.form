@@ -385,6 +385,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JProgressBar" name="barra">
+      <Properties>
+        <Property name="stringPainted" type="boolean" value="true"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

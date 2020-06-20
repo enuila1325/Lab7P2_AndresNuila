@@ -19,6 +19,13 @@ public class AdminBarra extends Thread {
         this.flag = true;
     }
 
+    public AdminBarra(JProgressBar progBar, String pos) {
+        this.progBar = progBar;
+        this.pos = pos;
+    }
+    
+    
+
     public void run() {
         while (flag) {
             if (o == null) {
@@ -29,7 +36,7 @@ public class AdminBarra extends Thread {
                 progBar.setString(pos + "/" + ((Archivo) o).getLink());
             }
             try {
-                Thread.sleep(50);
+                Thread.sleep(15);
             } catch (InterruptedException ex) {
             }
         }

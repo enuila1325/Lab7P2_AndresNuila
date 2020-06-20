@@ -21,10 +21,6 @@ public class Main extends javax.swing.JFrame {
         cm.addElement(".txt");
         cm.addElement(".mp4");
         cb_extension.setModel(cm);
-        
-        System.out.println(pos);
-        System.out.println(o);
-        
         AdminBarra ab = new AdminBarra(barra, pos, o);
         Thread proceso = new Thread(ab);
         proceso.start();
@@ -239,6 +235,8 @@ public class Main extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(listaPrincipal);
 
+        barra.setStringPainted(true);
+
         jMenu1.setText("MENUS");
 
         jmMiunidad.setText("Mi Unidad");
@@ -415,7 +413,10 @@ public class Main extends javax.swing.JFrame {
     private void listaPrincipalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaPrincipalMouseClicked
         int x = listaPrincipal.getSelectedIndex();
         DefaultListModel l = (DefaultListModel) listaPrincipal.getModel();
-        o = l.get(x);;
+        o = l.get(x);
+        AdminBarra ab = new AdminBarra(barra, pos, o);
+        Thread proceso = new Thread(ab);
+        proceso.start();
         if (evt.isMetaDown()) {
             switch (aux) {
                 case 0:
@@ -781,6 +782,6 @@ public class Main extends javax.swing.JFrame {
     private ArrayList MiUnidad = new ArrayList();
     private ArrayList Destacados = new ArrayList();
     private int aux;
-    private String pos="Google Dive";
+    private String pos;
     private Object o;
 }
