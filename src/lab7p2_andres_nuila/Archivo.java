@@ -2,7 +2,7 @@ package lab7p2_andres_nuila;
 
 import java.io.Serializable;
 
-public class Archivo implements Serializable{
+public class Archivo implements Serializable {
 
     private String nombre, link, extension;
     private int tamaño;
@@ -52,7 +52,7 @@ public class Archivo implements Serializable{
 
     @Override
     public String toString() {
-        return "Archivo: \n" + nombre + "." + extension;
+        return "Archivo: \n" + nombre + extension + " link//" + link;
     }
 
 }
