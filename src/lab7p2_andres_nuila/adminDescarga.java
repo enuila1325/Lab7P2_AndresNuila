@@ -33,10 +33,7 @@ public class adminDescarga extends Thread {
             } catch (InterruptedException ex) {
             }
         }
-        if (!flag) {
-
-            JOptionPane.showMessageDialog(null, "Descarga Finalizada");
-        }
+        
     }
 
 }
